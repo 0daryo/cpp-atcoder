@@ -35,14 +35,11 @@ typedef long long ll;
 #define F first
 #define S second
 
+int a[32] = {1, 1, 1, 2, 1, 2, 1, 5, 2, 2, 1, 5, 1, 2, 1, 14, 1, 5, 1, 5, 2, 2, 1, 15, 2, 2, 5, 4, 1, 4, 1, 51};
 int main()
 {
-  double a;
-  scanf("%lf", &a);
-  string s, ss;
-  cin >> s;
-  cin >> ss;
-  printf("%lf\n", a);
-  cout << s << " " << ss << "\n";
+  int k;
+  scanf("%d", &k);
+  cout << a[k - 1] << "\n";
   return 0;
 }

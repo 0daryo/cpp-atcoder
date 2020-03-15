@@ -37,12 +37,31 @@ typedef long long ll;
 
 int main()
 {
-  double a;
-  scanf("%lf", &a);
-  string s, ss;
-  cin >> s;
-  cin >> ss;
-  printf("%lf\n", a);
-  cout << s << " " << ss << "\n";
+  int a, b, c;
+  scanf("%d", &a);
+  scanf("%d", &b);
+  scanf("%d", &c);
+  int right = c - a - b;
+  long double left = 2 * sqrt(a * b);
+  int inted = left;
+  // double div = left - inted;
+  // double div = inside - inted;
+  // double left = 2 * inted + inside;
+  if (right < 1)
+  {
+    cout << "No"
+         << "\n";
+    return 0;
+  }
+  if (inted < right)
+  {
+    cout << "Yes"
+         << "\n";
+  }
+  else
+  {
+    cout << "No"
+         << "\n";
+  }
   return 0;
 }

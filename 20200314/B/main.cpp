@@ -37,12 +37,24 @@ typedef long long ll;
 
 int main()
 {
-  double a;
-  scanf("%lf", &a);
-  string s, ss;
-  cin >> s;
-  cin >> ss;
-  printf("%lf\n", a);
-  cout << s << " " << ss << "\n";
+  long h, w;
+  scanf("%ld", &h);
+  scanf("%ld", &w);
+  long sum = h * w;
+  long o;
+  if (h == 1 || w == 1)
+  {
+    cout << 1 << "\n";
+    return 0;
+  }
+  if (sum % 2 == 1)
+  {
+    o = sum / 2 + 1;
+  }
+  else
+  {
+    o = sum / 2;
+  }
+  cout << o << "\n";
   return 0;
 }

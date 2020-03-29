@@ -19,9 +19,11 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
-#define REP(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define REPD(i, n) for (ll i = (ll)(n)-1; i >= 0; i--)
 #define FOR(i, a, b) for (ll i = (a); i <= (b); i++)
 #define FORD(i, a, b) for (ll i = (a); i >= (b); i--)
@@ -37,12 +39,8 @@ typedef long long ll;
 
 int main()
 {
-  double a;
-  scanf("%lf", &a);
-  string s, ss;
-  cin >> s;
-  cin >> ss;
-  printf("%lf\n", a);
-  cout << s << " " << ss << "\n";
+  int n;
+  cin >> n;
+  cout << n << "\n";
   return 0;
 }

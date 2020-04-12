@@ -19,6 +19,8 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
@@ -35,49 +37,37 @@ typedef long long ll;
 #define F first
 #define S second
 
+ll gcd(ll x, ll y)
+{
+  return y ? gcd(y, x % y) : x;
+}
+
+vector<pair<ll, int>> factorize(ll n)
+{
+  vector<pair<ll, int>> res;
+  for (ll i = 2; i * i <= n; i++)
+  {
+    if (n % i)
+      continue;
+    res.emplace_back(i, 0);
+    while (n % i == 0)
+    {
+      n /= i;
+      res.back().second++;
+    }
+  }
+  if (n != 1)
+    res.emplace_back(n, 1);
+  return res;
+}
+
 int main()
 {
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> p, sum;
-  rep(i, n)
-  {
-    ll tmp;
-    cin >> tmp;
-    p.push_back(tmp);
-    if (i == 0)
-    {
-      sum.push_back(tmp);
-      continue;
-    }
-    else
-    {
-      sum.push_back(sum[i - 1] + tmp);
-    }
-  }
-  ll maxIdx = 0;
-  ll mx = 0;
-  rep(i, n - k + 1)
-  {
-    if (i == 0)
-    {
-      continue;
-    }
-    ll f = sum[i + k - 1] - sum[i - 1];
-    if (f > mx)
-    {
-      mx = f;
-      maxIdx = i;
-    }
-  }
-  double ans = 0;
-  ll start = maxIdx;
-  ll end = maxIdx + k;
-  for (ll i = start; i < end; i++)
-  {
-    double plus = (1 + p[i]) / 2.0;
-    ans += plus;
-  }
-  printf("%.10f\n", ans);
+  ll a, b;
+  cin >> a >> b;
+  ll g = gcd(a, b);
+  vector<pair<ll, int>> f = factorize(g);
+  int ans = f.size() + 1;
+  cout << ans << endl;
   return 0;
 }

@@ -37,76 +37,88 @@ const int mod = 1e+9 + 7;
 #define F first
 #define S second
 
-struct UnionFind
+struct mint
 {
-  vector<int> d;
-  UnionFind(int n) : d(n, -1) {}
-  int root(int x)
+  ll x; // typedef long long ll;
+  mint(ll x = 0) : x((x % mod + mod) % mod) {}
+  mint operator-() const { return mint(-x); }
+  mint &operator+=(const mint a)
   {
-    if (d[x] < 0)
-      return x;
-    return d[x] = root(d[x]);
+    if ((x += a.x) >= mod)
+      x -= mod;
+    return *this;
   }
-  bool unite(int x, int y)
+  mint &operator-=(const mint a)
   {
-    x = root(x);
-    y = root(y);
-    if (x == y)
-      return false;
-    // 根は負で管理している
-    if (d[x] > d[y])
-      swap(x, y);
-    // x大きい方
-    d[x] += d[y];
-    d[y] = x;
-    return true;
+    if ((x += mod - a.x) >= mod)
+      x -= mod;
+    return *this;
   }
-  bool same(int x, int y)
+  mint &operator*=(const mint a)
   {
-    return root(x) == root(y);
+    (x *= a.x) %= mod;
+    return *this;
   }
-  int size(int x)
+  mint operator+(const mint a) const { return mint(*this) += a; }
+  mint operator-(const mint a) const { return mint(*this) -= a; }
+  mint operator*(const mint a) const { return mint(*this) *= a; }
+  mint pow(ll t) const
   {
-    return -d[root(x)];
+    if (!t)
+      return 1;
+    mint a = pow(t >> 1);
+    a *= a;
+    if (t & 1)
+      a *= *this;
+    return a;
   }
+
+  // for prime mod
+  mint inv() const { return pow(mod - 2); }
+  mint &operator/=(const mint a) { return *this *= a.inv(); }
+  mint operator/(const mint a) const { return mint(*this) /= a; }
 };
 
-int deg[100005];
-vector<int> to[100005];
+mint f(ll n)
+{
+  if (n == 0)
+    return 1;
+  mint x = f(n / 2);
+  x *= x;
+  if (n % 2 == 1)
+    x *= 2;
+  return x;
+}
+
+mint choose(ll n, ll a)
+{
+  mint x = 1, y = 1;
+  rep(i, a)
+  {
+    x *= n - i;
+    y *= i + 1;
+  }
+  return x / y;
+}
 
 int main()
 {
-  int n, m, k;
-  cin >> n >> m >> k;
-  UnionFind uf(n);
-  rep(i, m)
+  ll x, y;
+  cin >> x >> y;
+  ll n = (x + y) / 3;
+  if ((x + y) % 3 != 0)
   {
-    int a, b;
-    cin >> a >> b;
-    a--;
-    b--;
-    deg[a]++;
-    deg[b]++;
-    uf.unite(a, b);
+    cout << 0 << "\n";
+    return 0;
   }
-  rep(i, k)
+  ll tx = x - n;
+  ll ty = y - n;
+  if (tx < 0 || ty < 0)
   {
-    int a, b;
-    cin >> a >> b;
-    a--;
-    b--;
-    to[a].push_back(b);
-    to[b].push_back(a);
+    cout << 0 << "\n";
+    return 0;
   }
-  rep(i, n)
-  {
-    int ans = uf.size(i) - 1 - deg[i];
-    for (int u : to[i])
-    {
-      if (uf.same(i, u))
-        ans--;
-    }
-    printf("%d%c", ans, i == n - 1 ? '\n' : ' ');
-  }
+  mint ans = choose(tx + ty, tx);
+  cout << ans.x << "\n";
   return 0;
 }

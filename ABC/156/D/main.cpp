@@ -21,7 +21,7 @@ using namespace std;
 typedef long long ll;
 
 //マクロ
-#define REP(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define REPD(i, n) for (ll i = (ll)(n)-1; i >= 0; i--)
 #define FOR(i, a, b) for (ll i = (a); i <= (b); i++)
 #define FORD(i, a, b) for (ll i = (a); i >= (b); i--)
@@ -35,35 +35,70 @@ typedef long long ll;
 #define F first
 #define S second
 
-long nCr(int n, int r)
+const int mod = 1000000007;
+struct mint
 {
-  long ans = 1;
-  for (int i = n; i > n - r; --i)
+  ll x; // typedef long long ll;
+  mint(ll x = 0) : x((x % mod + mod) % mod) {}
+  mint operator-() const { return mint(-x); }
+  mint &operator+=(const mint a)
   {
-    ans = ans * i;
+    if ((x += a.x) >= mod)
+      x -= mod;
+    return *this;
   }
-  for (int i = 1; i < r + 1; ++i)
+  mint &operator-=(const mint a)
   {
-    ans = ans / i;
+    if ((x += mod - a.x) >= mod)
+      x -= mod;
+    return *this;
   }
-  return ans;
+  mint &operator*=(const mint a)
+  {
+    (x *= a.x) %= mod;
+    return *this;
+  }
+  mint operator+(const mint a) const { return mint(*this) += a; }
+  mint operator-(const mint a) const { return mint(*this) -= a; }
+  mint operator*(const mint a) const { return mint(*this) *= a; }
+  mint pow(ll t) const
+  {
+    if (!t)
+      return 1;
+    mint a = pow(t >> 1);
+    a *= a;
+    if (t & 1)
+      a *= *this;
+    return a;
+  }
+
+  // for prime mod
+  mint inv() const { return pow(mod - 2); }
+  mint &operator/=(const mint a) { return *this *= a.inv(); }
+  mint operator/(const mint a) const { return mint(*this) /= a; }
+};
+
+// O(a)
+mint choose(ll n, ll a)
+{
+  mint x = 1, y = 1;
+  rep(i, a)
+  {
+    x *= n - i;
+    y *= i + 1;
+  }
+  return x / y;
 }
-int n, a, b;
+ll n, a, b;
 int main()
 {
   cin >> n;
   cin >> a;
   cin >> b;
-  ll ans = 0;
-  for (int i = 1; i < n + 1; i++)
-  {
-    if (i == a || i == b)
-    {
-      continue;
-    }
-    ans += nCr(n, i);
-  }
-  ll m = ans % MOD;
-  cout << m << endl;
+  mint ans = mint(2).pow(n);
+  ans -= 1;
+  ans -= choose(n, a);
+  ans -= choose(n, b);
+  cout << ans.x << endl;
   return 0;
 }

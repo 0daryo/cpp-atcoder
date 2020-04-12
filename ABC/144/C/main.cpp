@@ -19,6 +19,8 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
@@ -37,47 +39,17 @@ typedef long long ll;
 
 int main()
 {
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> p, sum;
-  rep(i, n)
+  ll n;
+  cin >> n;
+  ll x = 0;
+  for (ll i = 1; i * i <= n; i++)
   {
-    ll tmp;
-    cin >> tmp;
-    p.push_back(tmp);
-    if (i == 0)
+    if (n % i == 0)
     {
-      sum.push_back(tmp);
-      continue;
-    }
-    else
-    {
-      sum.push_back(sum[i - 1] + tmp);
+      x = i;
     }
   }
-  ll maxIdx = 0;
-  ll mx = 0;
-  rep(i, n - k + 1)
-  {
-    if (i == 0)
-    {
-      continue;
-    }
-    ll f = sum[i + k - 1] - sum[i - 1];
-    if (f > mx)
-    {
-      mx = f;
-      maxIdx = i;
-    }
-  }
-  double ans = 0;
-  ll start = maxIdx;
-  ll end = maxIdx + k;
-  for (ll i = start; i < end; i++)
-  {
-    double plus = (1 + p[i]) / 2.0;
-    ans += plus;
-  }
-  printf("%.10f\n", ans);
+  ll y = n / x;
+  cout << x + y - 2 << "\n";
   return 0;
 }

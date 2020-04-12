@@ -47,6 +47,7 @@ int main()
   }
 
   long long res = 0;
+  // 桁を全部試す
   for (int d = 0; d < 60; ++d)
   {
     long long n0 = 0, n1 = 0;
@@ -58,7 +59,7 @@ int main()
         ++n0; // d 桁目が 0
     }
     long long tmp = (1ll << d) % mod; // 2^d
-    // B の要素 (xor 演算を施した数) で d 桁目が 1 である個数
+    // B の要素 (xor 演算を施した数) で d 桁目が 1 である個数(組みあわせ)modをとっておく
     long long n = n0 * n1 % mod;
     // B の要素 (xor 演算を施した数) の d 桁目の総和 (= 2^d * n0 * n1)
     tmp = tmp * n % mod;

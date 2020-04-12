@@ -1,4 +1,4 @@
-#include <algorithm>     //sort,二分探索,など
+ #include <algorithm>     //sort,二分探索,など
 #include <bitset>        //固定長bit集合
 #include <cmath>         //pow,logなど
 #include <complex>       //複素数

@@ -21,7 +21,7 @@ using namespace std;
 typedef long long ll;
 
 //マクロ
-#define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define REP(i, n) for (ll i = 0; i < (ll)(n); i++)
 #define REPD(i, n) for (ll i = (ll)(n)-1; i >= 0; i--)
 #define FOR(i, a, b) for (ll i = (a); i <= (b); i++)
 #define FORD(i, a, b) for (ll i = (a); i >= (b); i--)
@@ -35,49 +35,41 @@ typedef long long ll;
 #define F first
 #define S second
 
+using P = pair<int, int>;
+
+int N, M;
 int main()
 {
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> p, sum;
-  rep(i, n)
+  cin >> N >> M;
+  vector<P> p(M);
+  REP(i, M)
+  cin >> p[i].first >> p[i].second;
+  REP(x, 1000)
   {
-    ll tmp;
-    cin >> tmp;
-    p.push_back(tmp);
-    if (i == 0)
+    int keta = 1;
+    int nx = x / 10;
+    vector<int> d(1, x % 10);
+    while (nx)
     {
-      sum.push_back(tmp);
+      keta++;
+      d.push_back(nx % 10);
+      nx /= 10;
+    }
+    if (keta != N)
       continue;
-    }
-    else
+    bool ok = true;
+    reverse(d.begin(), d.end());
+    REP(i, M)
     {
-      sum.push_back(sum[i - 1] + tmp);
+      if (d[p[i].first - 1] != p[i].second)
+        ok = false;
+    }
+    if (ok)
+    {
+      cout << x << endl;
+      return 0;
     }
   }
-  ll maxIdx = 0;
-  ll mx = 0;
-  rep(i, n - k + 1)
-  {
-    if (i == 0)
-    {
-      continue;
-    }
-    ll f = sum[i + k - 1] - sum[i - 1];
-    if (f > mx)
-    {
-      mx = f;
-      maxIdx = i;
-    }
-  }
-  double ans = 0;
-  ll start = maxIdx;
-  ll end = maxIdx + k;
-  for (ll i = start; i < end; i++)
-  {
-    double plus = (1 + p[i]) / 2.0;
-    ans += plus;
-  }
-  printf("%.10f\n", ans);
+  cout << -1 << endl;
   return 0;
 }

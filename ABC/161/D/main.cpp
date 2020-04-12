@@ -19,6 +19,8 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
@@ -37,47 +39,47 @@ typedef long long ll;
 
 int main()
 {
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> p, sum;
-  rep(i, n)
-  {
-    ll tmp;
-    cin >> tmp;
-    p.push_back(tmp);
-    if (i == 0)
-    {
-      sum.push_back(tmp);
-      continue;
-    }
-    else
-    {
-      sum.push_back(sum[i - 1] + tmp);
-    }
-  }
-  ll maxIdx = 0;
-  ll mx = 0;
-  rep(i, n - k + 1)
+  ll k;
+  vector<ll> lunlun;
+  map<int, vector<ll>> lunvec;
+  cin >> k;
+  k--;
+  rep(i, 10)
   {
     if (i == 0)
+      continue;
+    lunlun.push_back(i);
+    lunvec[1].push_back(i);
+  }
+  ll ans = 0;
+  int keta = 1;
+  while (1)
+  {
+    if (k < lunlun.size())
     {
+      ans = lunlun[k];
+      break;
+    }
+    if (keta == 1)
+    {
+      keta++;
       continue;
     }
-    ll f = sum[i + k - 1] - sum[i - 1];
-    if (f > mx)
+    vector<ll> old = lunvec[keta - 1];
+    rep(i, old.size())
     {
-      mx = f;
-      maxIdx = i;
+      ll target = old[i];
+      int matsubi = target % 10;
+      for (int i = -1; i <= 1; i++)
+      {
+        if (matsubi + i < 0 || 9 < matsubi + i)
+          continue;
+        lunvec[keta].push_back(10 * target + matsubi + i);
+        lunlun.push_back(10 * target + matsubi + i);
+      }
     }
+    keta++;
   }
-  double ans = 0;
-  ll start = maxIdx;
-  ll end = maxIdx + k;
-  for (ll i = start; i < end; i++)
-  {
-    double plus = (1 + p[i]) / 2.0;
-    ans += plus;
-  }
-  printf("%.10f\n", ans);
+  cout << ans << "\n";
   return 0;
 }

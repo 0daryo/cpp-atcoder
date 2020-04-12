@@ -19,6 +19,8 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
@@ -35,49 +37,41 @@ typedef long long ll;
 #define F first
 #define S second
 
+struct town
+{
+  int id, x, y;
+};
+
 int main()
 {
-  ll n, k;
-  cin >> n >> k;
-  vector<ll> p, sum;
+  int n;
+  cin >> n;
+  vector<town> ts(n);
+  vector<int> arr;
   rep(i, n)
   {
-    ll tmp;
-    cin >> tmp;
-    p.push_back(tmp);
-    if (i == 0)
-    {
-      sum.push_back(tmp);
-      continue;
-    }
-    else
-    {
-      sum.push_back(sum[i - 1] + tmp);
-    }
+    int x, y;
+    cin >> x >> y;
+    arr.push_back(i);
+    town t = {int(i), x, y};
+    ts[i] = t;
   }
-  ll maxIdx = 0;
-  ll mx = 0;
-  rep(i, n - k + 1)
+  ll count = 0;
+  double sum = 0;
+  do
   {
-    if (i == 0)
+    rep(j, n - 1)
     {
-      continue;
+      int i = arr[j];
+      int k = arr[j + 1];
+      ll xdiff = ts[i].x - ts[k].x;
+      ll ydiff = ts[i].y - ts[k].y;
+      double tmp = sqrt(xdiff * xdiff + ydiff * ydiff);
+      sum += tmp;
     }
-    ll f = sum[i + k - 1] - sum[i - 1];
-    if (f > mx)
-    {
-      mx = f;
-      maxIdx = i;
-    }
-  }
-  double ans = 0;
-  ll start = maxIdx;
-  ll end = maxIdx + k;
-  for (ll i = start; i < end; i++)
-  {
-    double plus = (1 + p[i]) / 2.0;
-    ans += plus;
-  }
+    count++;
+  } while (next_permutation(arr.begin(), arr.end()));
+  double ans = sum / count;
   printf("%.10f\n", ans);
   return 0;
 }

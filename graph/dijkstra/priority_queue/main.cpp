@@ -19,6 +19,8 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
 
 //マクロ
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
@@ -34,82 +36,76 @@ typedef long long ll;
 #define MP make_pair
 #define F first
 #define S second
-#define REP(i, n) for (ll i = 0; i < (ll)(n); i++)
-const int mod = 1000000007;
-// const int mod = 998244353;
-struct mint
-{
-  ll x; // typedef long long ll;
-  mint(ll x = 0) : x((x % mod + mod) % mod) {}
-  mint operator-() const { return mint(-x); }
-  mint &operator+=(const mint a)
-  {
-    if ((x += a.x) >= mod)
-      x -= mod;
-    return *this;
-  }
-  mint &operator-=(const mint a)
-  {
-    if ((x += mod - a.x) >= mod)
-      x -= mod;
-    return *this;
-  }
-  mint &operator*=(const mint a)
-  {
-    (x *= a.x) %= mod;
-    return *this;
-  }
-  mint operator+(const mint a) const { return mint(*this) += a; }
-  mint operator-(const mint a) const { return mint(*this) -= a; }
-  mint operator*(const mint a) const { return mint(*this) *= a; }
-  mint pow(ll t) const
-  {
-    if (!t)
-      return 1;
-    mint a = pow(t >> 1);
-    a *= a;
-    if (t & 1)
-      a *= *this;
-    return a;
-  }
 
-  // for prime mod
-  mint inv() const { return pow(mod - 2); }
-  mint &operator/=(const mint a) { return *this *= a.inv(); }
-  mint operator/(const mint a) const { return mint(*this) /= a; }
+static const int MAX = 100;
+static const int WHITE = 0;
+static const int GRAY = 1;
+static const int BLACK = 2;
+static const int INFTY = (1 << 21);
+
+struct edge
+{
+  int to, cost;
 };
-
-mint f(int n)
+typedef pair<int, int> P; // 最短距離、頂点番号
+// 最短経路
+int d[INF];
+// start
+int s;
+vector<edge> G[INF];
+int n, M[100][100];
+void dijkstra()
 {
-  if (n == 0)
-    return 1;
-  mint x = f(n / 2);
-  x *= x;
-  if (n % 2 == 1)
-    x *= 2;
-  return x;
-}
-
-mint choose(int n, int a)
-{
-  mint x = 1, y = 1;
-  rep(i, a)
+  priority_queue<P, vector<P>, greater<P>> que;
+  fill(d, d + n, INF);
+  d[s] = 0;
+  que.push(P(0, s));
+  while (!que.empty())
   {
-    x *= n - i;
-    y *= i + 1;
+    P p = que.top();
+    que.pop();
+    int v = p.second;
+    if (d[v] < p.first)
+    {
+      continue;
+    }
+    for (int i = 0; i < G[v].size(); i++)
+    {
+      edge e = G[v][i];
+      if (d[e.to] > d[v] + e.cost)
+      {
+        d[e.to] = d[v] + e.cost;
+        que.push(P(d[e.to], e.to));
+      }
+    }
   }
-  return x / y;
+  rep(i, n)
+  {
+    cout << i << " " << (d[i] == INFTY ? -1 : d[i]) << endl;
+  }
 }
 
-// int main()
-// {
-//   mint a = choose(5, 2);
-//   cout << a << endl;
-//   return 0;
-// }
+// in
+// 5
+// 0 3 2 3 3 1 1 2
+// 1 2 0 2 3 4
+// 2 3 0 3 3 1 4 1
+// 3 4 2 1 0 1 1 4 4 3
+// 4 2 2 1 3 3
 int main()
 {
-  mint b = choose(20, 2);
-  cout << b.x << "\n";
+  cin >> n;
+  rep(i, n) rep(j, n) M[i][j] = INFTY;
+  int k, c, u, v;
+  rep(i, n)
+  {
+    cin >> u >> k;
+    for (int j = 0; j < k; j++)
+    {
+      cin >> v >> c;
+      M[u][v] = c;
+    }
+  }
+  dijkstra();
   return 0;
 }

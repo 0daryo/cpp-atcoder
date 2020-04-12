@@ -54,12 +54,14 @@ void dijkstra()
     d[i] = INFTY;
     color[i] = WHITE;
   }
+  // スタート地点
   d[0] = 0;
   color[0] = GRAY;
   while (1)
   {
     minv = INFTY;
     int u = -1;
+    // 未訪問の中から一番コストが低い
     rep(i, n)
     {
       if (minv > d[i] && color[i] != BLACK)
@@ -70,9 +72,11 @@ void dijkstra()
     }
     if (u == -1)
       break;
+    // uを訪問済みに
     color[u] = BLACK;
     for (int v = 0; v < n; v++)
     {
+      // 未訪問で繋がっている点
       if (color[v] != BLACK && M[u][v] != INFTY)
       {
         if (d[v] > d[u] + M[u][v])

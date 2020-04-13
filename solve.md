@@ -24,7 +24,7 @@ g++ main.cpp -o a && ./a
   座標
 - table
 - find
-- next_permutation 添字あってる？
+- next_permutation ABC145C 添字あってる？
 - bit 系
 
 # アルゴリズム
@@ -42,11 +42,12 @@ g++ main.cpp -o a && ./a
 - 隣接する系は累積和
 - 深さ優先探索(いけるかいけないか) -> 再帰・stack
 - 木は DFS を疑う
-- 幅優先(最短経路　迷路とか) -> queue 最短が決まったらキューに入れる
 - DP ぴったりで行ける時は貪欲でも DP でいい
 - k 回単位 -> modK で分けて抜き出したもの　前と違う手(ABC149:D)
 - 最小経路探索(n を頂点, m を辺)
 - 経路復元はアリ本 p98
+
+幅優先(最短経路　迷路とか) -> queue 最短が決まったらキューに入れる
 
 - BFS queue ABC160D
   o(n+m)

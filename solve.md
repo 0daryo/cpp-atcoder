@@ -17,6 +17,9 @@ g++ main.cpp -o a && ./a
   ダイクストラ
 
 - map
+  for(auto x : v) {
+  std::cout << x << "\n";
+  }
 - lower_bound
   ソート済みの配列を見つける系
 - set
@@ -41,7 +44,8 @@ g++ main.cpp -o a && ./a
 - long long で宣言してる？
 - 隣接する系は累積和
 - 深さ優先探索(いけるかいけないか) -> 再帰・stack
-- 木は DFS を疑う
+- 木は DFS を疑う To の vector 親を持つ再帰
+  ABC
 - DP ぴったりで行ける時は貪欲でも DP でいい
 - k 回単位 -> modK で分けて抜き出したもの　前と違う手(ABC149:D)
 - 最小経路探索(n を頂点, m を辺)

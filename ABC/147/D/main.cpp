@@ -38,32 +38,30 @@ const int mod = 1e+9 + 7;
 
 int main()
 {
-  int N;
-  cin >> N;
-  vector<long long> A(N);
-  for (int i = 0; i < N; ++i)
+  int n;
+  cin >> n;
+  vector<ll> a(n);
+  rep(i, n)
   {
-    cin >> A[i];
+    cin >> a[i];
   }
 
-  long long res = 0;
+  ll ans = 0;
   // 桁を全部試す
-  for (int d = 0; d < 60; ++d)
+  // AiとAjのk桁目を試す
+  // ２進数で表した時の桁ごとの総和
+  // 1から60桁目までのk桁目までについて、0の個数*1の個数*2^k
+  rep(i, 60)
   {
-    long long n0 = 0, n1 = 0;
-    for (int i = 0; i < N; ++i)
-    {
-      if ((A[i] >> d) & 1)
-        ++n1; // d 桁目が 1
-      else
-        ++n0; // d 桁目が 0
-    }
-    long long tmp = (1ll << d) % mod; // 2^d
-    // B の要素 (xor 演算を施した数) で d 桁目が 1 である個数(組みあわせ)modをとっておく
-    long long n = n0 * n1 % mod;
-    // B の要素 (xor 演算を施した数) の d 桁目の総和 (= 2^d * n0 * n1)
-    tmp = tmp * n % mod;
-    res = (res + tmp) % mod;
+    // i桁目が1である個数をx
+    ll x = 0;
+    rep(j, n) if (a[j] >> i & 1) x++;
+    ll y = n - x;
+    ll now = x * y % mod;
+    // x*y*2^k
+    rep(j, i) now = now * 2 % mod;
+    ans += now;
+    ans %= mod;
   }
-  cout << res << endl;
+  cout << ans << endl;
 }

@@ -4,7 +4,6 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> P;
 #define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
-
 const int mod = 1000000007;
 
 struct mint
@@ -48,22 +47,62 @@ struct mint
   mint &operator/=(const mint a) { return *this *= a.inv(); }
   mint operator/(const mint a) const { return mint(*this) /= a; }
 };
-
-ll sum(ll l, ll r)
+mint c[4005][4005];
+void init()
 {
-  return (l + r) * (r - l + 1) / 2;
+  c[0][0] = 1;
+  for (int i = 0; i <= 4000; i++)
+  {
+    for (int j = 0; j <= i; j++)
+    {
+      c[i + 1][j] += c[i][j];
+      c[i + 1][j + 1] += c[i][j];
+    }
+  }
+}
+mint comb(int n, int k)
+{
+  return c[n][k];
+}
+mint f2(int n, int k)
+{
+  return comb(n + k - 1, k - 1);
+}
+mint f(int n, int k)
+{
+  if (n < k)
+    return 0;
+  if (n == 0 && k == 0)
+    return 1;
+  if (k < 1)
+    return 0;
+  return f2(n - k, k);
 }
 
+// x1+x2+⋯+xk=n
+// xi≥0
+// を満たす整数 (x1,x2,…,xk) の組の個数を重複組合せと呼び、n+k−1Ck−1 通り。
+
+// x1+x2+⋯+xk=n
+// xi≥1
+// を満たす整数 (x1,x2,…,xk) の組の個数は n−1Ck−1 通りになる
 int main()
 {
+  init();
   int n, k;
   cin >> n >> k;
-  mint ans = 0;
-  for (int i = k; i <= n + 1; ++i)
+  for (int i = 1; i <= k; i++)
   {
-    ll l = sum(0, i - 1), r = sum(n - i + 1, n);
-    ans += r - l + 1;
+    mint blue = f(k, i);
+    mint red = 0;
+    {
+      red += f(n - k, i - 1);
+      red += f(n - k, i);
+      red += f(n - k, i);
+      red += f(n - k, i + 1);
+    }
+    mint ans = blue * red;
+    printf("%lld\n", ans.x);
   }
-  cout << ans.x << endl;
   return 0;
 }

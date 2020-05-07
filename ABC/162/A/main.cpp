@@ -37,25 +37,24 @@ const int mod = 1e+9 + 7;
 #define F first
 #define S second
 
+template <class T>
+bool contain(const std::string &s, const T &v)
+{
+  return s.find(v) != std::string::npos;
+}
+
 int main()
 {
-  int x, y;
-  cin >> x >> y;
-  int a, b, c;
-  cin >> a >> b >> c;
-  vector<int> p(a), q(b), r(c);
-  rep(i, a) cin >> p[i];
-  rep(i, b) cin >> q[i];
-  rep(i, c) cin >> r[i];
-  sort(p.rbegin(), p.rend());
-  sort(q.rbegin(), q.rend());
-  vector<int> d;
-  rep(i, x) d.push_back(p[i]);
-  rep(i, y) d.push_back(q[i]);
-  rep(i, c) d.push_back(r[i]);
-  sort(d.rbegin(), d.rend());
-  ll ans = 0;
-  rep(i, x + y) ans += d[i];
-  cout << ans << "\n";
+  int n;
+  cin >> n;
+  string str = to_string(n);
+  if (contain(str, "7"))
+  {
+    cout << "Yes" << endl;
+  }
+  else
+  {
+    cout << "No" << endl;
+  }
   return 0;
 }

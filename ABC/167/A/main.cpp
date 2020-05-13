@@ -9,8 +9,17 @@ typedef pair<int, int> P;
 
 int main()
 {
-  int n;
-  cin >> n;
-  cout << n << endl;
+  string s, t;
+  cin >> s >> t;
+  int sn = sz(s);
+  rep(i, sn)
+  {
+    if (s[i] != t[i])
+    {
+      cout << "No" << endl;
+      return 0;
+    }
+  }
+  cout << "Yes" << endl;
   return 0;
 }

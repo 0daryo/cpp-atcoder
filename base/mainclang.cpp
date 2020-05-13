@@ -16,39 +16,31 @@
 #include <unordered_set> //イテレータあるけど順序保持しないset
 #include <utility>       //pair
 #include <vector>        //可変長配列
-#define rep(i, n) for (int i = 0; i < (int)(n); i++)
-#define pb push_back
-#define all(v) v.begin(), v.end()
-#define fi first
-#define se second
-#define bigger (char)toupper
-#define smaller (char)tolower
-using namespace std;
-typedef pair<int, int> pii;
-typedef vector<int> vi;
-typedef vector<vi> vii;
-typedef long long ll;
-typedef unsigned long long ull;
 
-int hoge()
-{
-  return 3;
-}
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> P;
+const int mod = 1e+9 + 7;
+
+//マクロ
+#define rep(i, n) for (ll i = 0; i < (ll)(n); i++)
+#define REPD(i, n) for (ll i = (ll)(n)-1; i >= 0; i--)
+#define FOR(i, a, b) for (ll i = (a); i <= (b); i++)
+#define FORD(i, a, b) for (ll i = (a); i >= (b); i--)
+#define ALL(x) (x).begin(), (x).end() //sortなどの引数を省略したい
+#define SIZE(x) ((ll)(x).size())      //sizeをsize_tからllに直しておく
+#define MAX(x) *max_element(ALL(x))
+#define INF 1000000000000
+#define MOD 10000007
+#define PB push_back
+#define MP make_pair
+#define F first
+#define S second
+
 int main()
 {
-  int N;
-  cin >> N;
-  vi P(N);
-  rep(i, N) cin >> P.at(i);
-  int minimum = N + 1;
-  int counter = 0;
-  rep(i, N)
-  {
-    if (minimum > P.at(i))
-    {
-      counter++;
-      minimum = P.at(i);
-    }
-  }
-  cout << hoge() << endl;
+  int n;
+  cin >> n;
+  cout << n << "\n";
+  return 0;
 }

@@ -31,5 +31,4 @@
 *.out
 *.app
 
-a
-!*/A/main.cpp
+t
